@@ -1,13 +1,17 @@
 
 FROM php:8.2-apache
 
-# Extensiones necesarias para el proyecto
-RUN docker-php-ext-install pdo_mysql mbstring
+# Instalar dependencias necesarias para PHP
+RUN apt-get update && apt-get install -y \
+    libonig-dev \
+    && docker-php-ext-install pdo_mysql mbstring \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Módulos de Apache
+# Activar módulos de Apache
 RUN a2enmod rewrite headers
 
-# Render utiliza por defecto el puerto 10000
+# Configurar Apache para escuchar en el puerto 10000 de Render
 RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf \
     && sed -i 's/:80>/:10000>/' /etc/apache2/sites-available/000-default.conf
 
@@ -15,9 +19,10 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html/
 
-# Permisos para el almacenamiento interno
-RUN mkdir -p /var/www/html/storage \
-    && chown -R www-data:www-data /var/www/html/storage \
-    && chmod -R 750 /var/www/html/storage
+# Permisos para archivos que utiliza el sistema
+RUN mkdir -p /var/www/html/uploads /var/www/html/storage \
+    && chown -R www-data:www-data /var/www/html/uploads /var/www/html/storage \
+    && chmod -R 775 /var/www/html/uploads /var/www/html/storage
 
 EXPOSE 10000
+
