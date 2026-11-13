@@ -1,0 +1,5 @@
+.env
+.env.*
+includes/config_local.php
+storage/app.key
+*.log
