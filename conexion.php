@@ -3,8 +3,10 @@
 
 date_default_timezone_set('America/La_Paz');
 
-$https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
-
+$https = (
+    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https')
+);
 // ======================================
 // 1. CONFIGURACIÓN DE SESIONES Y SEGURIDAD
 // ======================================
