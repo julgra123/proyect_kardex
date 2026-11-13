@@ -109,7 +109,9 @@ $pass = obtenerConfiguracion(
 // 4. CERTIFICADO SSL DE AIVEN
 // ======================================
 
-$ssl_ca = __DIR__ . '/includes/ca.pem';
+$ssl_ca = is_readable('/etc/secrets/ca.pem')
+    ? '/etc/secrets/ca.pem'
+    : __DIR__ . '/includes/ca.pem';
 
 // ======================================
 // 5. CONEXIÓN PDO
