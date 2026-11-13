@@ -38,11 +38,12 @@ try {
     ];
 
     // <-- NUEVO: Si existe el archivo ca.pem de Aiven, se activa el cifrado SSL obligatorio
-    $ssl_ca = __DIR__ . '/includes/ca.pem';
-    if (is_file($ssl_ca)) {
-        $options[PDO::MYSQL_ATTR_SSL_CA] = $ssl_ca;
-    }
+    // Cambia esta parte en tu conexion.php:
+$ssl_ca = file_exists('/etc/secrets/ca.pem') ? '/etc/secrets/ca.pem' : __DIR__ . '/includes/ca.pem';
 
+if (is_file($ssl_ca)) {
+    $options[PDO::MYSQL_ATTR_SSL_CA] = $ssl_ca;
+}
     // Se incluye el parámetro ;port=$port en el DSN
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass, $options);
 
