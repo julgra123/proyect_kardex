@@ -3,4 +3,10 @@
 .DS_Store
 *.zip
 *.rar
-README-local.txt
+
+.env
+.env.*
+! .env.example
+
+includes/config_local.php
+storage/app.key
