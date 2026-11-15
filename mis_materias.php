@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/layout.php'; verificarSesion(); autorizar('materia.propias');
-$filas = todos('SELECT m.*,(SELECT COUNT(*) FROM kardex k WHERE k.id_materia=m.id_materia) AS notas,(SELECT GROUP_CONCAT(mc.curso ORDER BY mc.curso SEPARATOR ", ") FROM materia_cursos mc WHERE mc.id_materia=m.id_materia) AS cursos FROM materias m WHERE id_docente=? ORDER BY nombre_materia',[$_SESSION['usuario_id']]);
+$filas = todos("SELECT m.*,(SELECT COUNT(*) FROM kardex k WHERE k.id_materia=m.id_materia) AS notas,(SELECT GROUP_CONCAT(mc.curso ORDER BY mc.curso SEPARATOR ', ') FROM materia_cursos mc WHERE mc.id_materia=m.id_materia) AS cursos FROM materias m WHERE id_docente=? ORDER BY nombre_materia",[$_SESSION['usuario_id']]);
 cabecera('Mis materias','materias','Tu espacio para acompañar el aprendizaje y registrar calificaciones.');
 ?>
 <div class="cards">
