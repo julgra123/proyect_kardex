@@ -7,7 +7,7 @@ if($q!=='') { $where.=' AND (e.nombres LIKE ? OR e.apellidos LIKE ? OR e.re LIKE
 if($materia!=='') { $where.=' AND k.id_materia=?'; $params[]=$materia; }
 if($trimestre!=='') { $where.=' AND k.trimestre=?'; $params[]=$trimestre; }
 if($curso!=='') { $where.=' AND e.curso=?'; $params[]=$curso; }
-$filas=todos('SELECT k.*,e.nombres,e.apellidos,e.curso,m.nombre_materia,CONCAT(d.nombres," ",d.apellidos) AS docente FROM kardex k JOIN estudiantes e ON e.re=k.re_estudiante JOIN materias m ON m.id_materia=k.id_materia JOIN docentes d ON d.id_docente=k.id_docente'.$where.' ORDER BY k.id_kardex DESC',$params);
+$filas=todos("SELECT k.*,e.nombres,e.apellidos,e.curso,m.nombre_materia,CONCAT(d.nombres, ' ', d.apellidos) AS docente FROM kardex k JOIN estudiantes e ON e.re=k.re_estudiante JOIN materias m ON m.id_materia=k.id_materia JOIN docentes d ON d.id_docente=k.id_docente".$where." ORDER BY k.id_kardex DESC",$params);
 cabecera('Calificaciones','notas','Consulta, registra y corrige las notas por materia y trimestre.',(tiene_permiso('nota.crear') ? '<a class="button" href="registrar_nota.php">'.icono('plus').' Registrar nota</a>' : ''));
 ?>
 <section class="panel">
