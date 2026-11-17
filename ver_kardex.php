@@ -65,11 +65,12 @@ if (!$estudiante) {
 |--------------------------------------------------------------------------
 */
 
+
 $notas = todos(
     'SELECT
         k.*,
         m.nombre_materia,
-        CONCAT(d.nombres," ",d.apellidos) AS docente
+        CONCAT(d.nombres, \' \', d.apellidos) AS docente
     FROM kardex k
     JOIN materias m ON m.id_materia=k.id_materia
     JOIN docentes d ON d.id_docente=k.id_docente
@@ -91,6 +92,7 @@ $notas = todos(
         ? [$re, $_SESSION['usuario_id']]
         : [$re]
 );
+
 
 /*
 |--------------------------------------------------------------------------
